@@ -30,26 +30,26 @@ class GfG {
 
 class Solution {
     public int count(int coins[], int sum) {
-        int dp[][]=new int[sum+1][coins.length];
-        for(int d[]:dp){
+        int[][] dp=new int[sum+1][coins.length];
+        for(int[] d:dp){
             Arrays.fill(d,-1);
         }
-        return solve(coins,sum,0,dp); 
+        return solve(coins,sum,0,dp);
     }
-    public int solve(int coins[],int sum,int last,int dp[][]){
+    public int solve(int coins[],int sum,int i,int dp[][]){
         if(sum==0){
             return 1;
         }
-        if(sum<0){
+        if(sum<0 || i>=coins.length){
             return 0;
         }
-        if(dp[sum][last]!=-1){
-            return dp[sum][last];
+        if(dp[sum][i]!=-1){
+            return dp[sum][i];
         }
-        int count=0;
-        for(int i=last;i<coins.length;i++){
-            count+=solve(coins,sum-coins[i],i,dp);
+        int ways=0;
+        for(int j=i;j<coins.length;j++){
+            ways+=solve(coins,sum-coins[j],j,dp);
         }
-        return dp[sum][last]=count;
+        return dp[sum][i]=ways;
     }
 }
